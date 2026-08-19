@@ -2,14 +2,14 @@
 
 An [Omarchy](https://omarchy.org) bar widget plugin that toggles whether your laptop goes to sleep when the lid is closed.
 
-## States
+## Behavior & Tooltips
 
-- **`Lid Sleep: Active` (Normal):** Lid sleep is active. Closing your laptop lid will put the machine to sleep normally. (Widget icon is quiet/dimmed).
-- **`Lid Sleep: Inactive` (Stay Awake):** Lid sleep is inactive. An inhibitor lock keeps the machine awake and running when the lid is closed while still locking the screen. (Widget icon is highlighted/active).
+- **Lid Sleep Allowed (Default):** Hover tooltip displays **`Prevent Lid Sleep`**. Clicking activates sleep inhibition so your laptop stays awake when the lid is closed. (Widget icon is quiet/dimmed).
+- **Lid Sleep Prevented (Stay Awake):** Hover tooltip displays **`Enable Lid Sleep`**. Clicking releases the inhibitor lock, restoring normal sleep behavior. (Widget icon is highlighted/active).
 
 ## Features
 
-- **Action-Based Status:** Clear tooltips referencing the actual action: `"Lid Sleep: Active"` (normal) vs `"Lid Sleep: Inactive"` (stay awake).
+- **Action-Oriented Tooltips:** Hovering tells you what clicking will do: **`Prevent Lid Sleep`** or **`Enable Lid Sleep`**.
 - **One-Click Toggle:** Click the top bar icon (`󰌢`) to toggle lid sleep on or off.
 - **Visual Feedback:** Highlights when lid sleep is inactive (stay-awake mode) to alert you that sleep is disabled.
 - **Desktop Notifications:** Displays quick on-screen alerts when toggling.
