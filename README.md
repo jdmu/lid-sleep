@@ -10,7 +10,7 @@ An [Omarchy](https://omarchy.org) bar widget plugin that toggles whether your la
 ## Features
 
 - **Action-Oriented Tooltips:** Hovering tells you what clicking will do: **`Prevent Lid Sleep`** or **`Enable Lid Sleep`**.
-- **One-Click Toggle:** Click the top bar icon (`󰌢`) to toggle lid sleep on or off.
+- **One-Click Toggle:** Click the top bar icon (💻) to toggle lid sleep on or off.
 - **Visual Feedback:** Highlights when lid sleep is inactive (stay-awake mode) to alert you that sleep is disabled.
 - **Desktop Notifications:** Displays quick on-screen alerts when toggling.
 - **Self-Contained:** Zero external configuration or root/sudo required.
