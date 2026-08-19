@@ -37,7 +37,7 @@ BarWidget {
 
   Process {
     id: statusProc
-    command: ["bash", "-c", toggleScriptPath + " status"]
+    command: [toggleScriptPath, "status"]
     onExited: function(exitCode) {
       // If inhibitor is running (exit code 0), sleep is inactive (inhibited).
       // Otherwise, sleep is active (normal).
