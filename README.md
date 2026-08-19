@@ -17,7 +17,7 @@ When enabled (Active), it takes a low-level `systemd-inhibit` lock on the lid sw
 ### Via Omarchy Plugin Manager
 
 ```bash
-omarchy plugin add https://github.com/<your-username>/lid-sleep.git --enable
+omarchy plugin add https://github.com/jdmu/lid-sleep.git --enable
 ```
 
 ### Manual Installation

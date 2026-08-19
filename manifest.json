@@ -3,7 +3,7 @@
   "id": "lid-sleep",
   "name": "Lid Sleep",
   "version": "1.0.0",
-  "author": "joe",
+  "author": "jdmu",
   "license": "MIT",
   "description": "Toggle whether laptop lid close triggers sleep",
   "kinds": [
