@@ -20,16 +20,24 @@ BarWidget {
 
   function toggle() {
     if (root.bar) {
-      root.bar.run(toggleScriptPath)
+      root.bar.run(toggleScriptPath + " toggle")
     }
   }
+
+  function cleanup() {
+    if (root.sleepInhibited && root.bar) {
+      root.bar.run(toggleScriptPath + " stop false")
+    }
+  }
+
+  Component.onDestruction: root.cleanup()
 
   implicitWidth: button.implicitWidth
   implicitHeight: button.implicitHeight
 
   Process {
     id: statusProc
-    command: ["pgrep", "-f", "systemd-inhibit --what=handle-lid-switch"]
+    command: ["bash", "-c", toggleScriptPath + " status"]
     onExited: function(exitCode) {
       // If inhibitor is running (exit code 0), sleep is inactive (inhibited).
       // Otherwise, sleep is active (normal).
@@ -53,6 +61,9 @@ BarWidget {
     }
     function refresh(): void {
       root.refresh()
+    }
+    function stop(): void {
+      root.cleanup()
     }
   }
 

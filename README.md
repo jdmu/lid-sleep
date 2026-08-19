@@ -13,7 +13,7 @@ An [Omarchy](https://omarchy.org) bar widget plugin that toggles whether your la
 - **One-Click Toggle:** Click the top bar icon (💻) to toggle lid sleep on or off.
 - **Visual Feedback:** Highlights when lid sleep is inactive (stay-awake mode) to alert you that sleep is disabled.
 - **Desktop Notifications:** Displays quick on-screen alerts when toggling.
-- **Self-Contained:** Zero external configuration or root/sudo required.
+- **Self-Contained:** Zero external configuration required. Runs entirely in user space.
 
 ## Installation
 
@@ -35,8 +35,9 @@ omarchy restart shell
 
 ## How It Works
 
-- When toggled to **Inactive**, it spawns `systemd-inhibit --what=handle-lid-switch` in the background.
-- When toggled back to **Active**, it terminates the inhibitor process, restoring standard suspend behavior.
+- When toggled to **Inactive**, it spawns `systemd-inhibit --what=handle-lid-switch` and tracks its specific process PID under `~/.local/state/omarchy/plugins/lid-sleep/`.
+- When toggled back to **Active**, it terminates its tracked inhibitor process, restoring standard suspend behavior without affecting any other system inhibitors.
+- When the plugin is unloaded, disabled, or removed, active inhibition is cleanly released automatically.
 - Screen locking on lid close is preserved by Omarchy's window manager bindings.
 
 ## License
