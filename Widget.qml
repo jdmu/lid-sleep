@@ -6,7 +6,7 @@ import qs.Ui
 
 BarWidget {
   id: root
-  moduleName: "prevent-lid-sleep"
+  moduleName: "lid-sleep"
 
   property bool active: false
   readonly property string toggleScriptPath: Qt.resolvedUrl("toggle.sh").toString().replace(/^file:\/\//, "")
@@ -41,7 +41,7 @@ BarWidget {
   }
 
   IpcHandler {
-    target: "prevent-lid-sleep"
+    target: "lid-sleep"
 
     function toggle(): void {
       root.toggle()
@@ -60,7 +60,7 @@ BarWidget {
     dimmed: !root.active
     slotSize: Style.bar.statusSlot
     fontSize: Style.font.caption
-    tooltipText: root.active ? "Prevent Lid Sleep: Active" : "Prevent Lid Sleep: Inactive"
+    tooltipText: root.active ? "Lid Sleep: Active" : "Lid Sleep: Inactive"
     onPressed: function(b) {
       root.toggle()
     }

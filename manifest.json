@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "id": "prevent-lid-sleep",
-  "name": "Prevent Lid Sleep",
+  "id": "lid-sleep",
+  "name": "Lid Sleep",
   "version": "1.0.0",
   "author": "joe",
   "license": "MIT",
-  "description": "Prevent system from going to sleep when the laptop lid is closed",
+  "description": "Toggle whether laptop lid close triggers sleep",
   "kinds": [
     "bar-widget"
   ],
@@ -13,8 +13,8 @@
     "barWidget": "Widget.qml"
   },
   "barWidget": {
-    "displayName": "Prevent Lid Sleep",
-    "description": "Toggle preventing system sleep when the laptop lid is closed",
+    "displayName": "Lid Sleep",
+    "description": "Toggle whether laptop lid close triggers sleep",
     "category": "System",
     "allowMultiple": false,
     "defaultSection": "center"
