@@ -65,7 +65,7 @@ BarWidget {
     dimmed: root.sleepActive
     slotSize: Style.bar.statusSlot
     fontSize: Style.font.caption
-    tooltipText: root.sleepActive ? "Lid Sleep: Active" : "Lid Sleep: Inactive"
+    tooltipText: root.sleepActive ? "Prevent Lid Sleep" : "Enable Lid Sleep"
     onPressed: function(b) {
       root.toggle()
     }
