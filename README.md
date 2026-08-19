@@ -35,9 +35,9 @@ omarchy restart shell
 
 ## How It Works
 
-- **Native Subprocess Lifecycle:** Uses Quickshell's native `Process` engine to manage `systemd-inhibit` directly as a managed child process.
-- **Zero PID Files:** Operates completely in-memory with zero disk writes, state files, or `/proc` polling.
-- **Guaranteed Cleanup:** When the plugin is unloaded, disabled, or removed, Quickshell automatically terminates the child process.
+- **Native Subprocess Lifecycle:** Uses Quickshell's native `Process` component to manage `systemd-inhibit` directly as a managed child process within the QML engine.
+- **In-Memory Operation:** Operates completely in-memory with zero disk writes or persistent state files.
+- **Guaranteed Cleanup:** When the plugin is unloaded, disabled, or removed, Quickshell's runtime process supervisor automatically terminates the child process.
 - **IPC Control:** Supports direct shell IPC via `omarchy-shell lid-sleep toggle`, `enable`, `disable`, and `status`.
 - Screen locking on lid close is preserved by Omarchy's window manager bindings.
 
