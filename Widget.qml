@@ -60,7 +60,7 @@ BarWidget {
     id: button
     anchors.fill: parent
     bar: root.bar
-    text: "\U000f0322"
+    text: "\udb80\udf22"
     active: root.sleepInhibited
     dimmed: root.sleepActive
     slotSize: Style.bar.statusSlot
