@@ -8,7 +8,10 @@ BarWidget {
   id: root
   moduleName: "lid-sleep"
 
-  property bool active: false
+  // sleepActive is true when lid sleep is active (normal behavior).
+  // sleepActive is false when lid sleep is inactive (inhibitor running, stay awake).
+  property bool sleepActive: true
+  readonly property bool sleepInhibited: !sleepActive
   readonly property string toggleScriptPath: Qt.resolvedUrl("toggle.sh").toString().replace(/^file:\/\//, "")
 
   function refresh() {
@@ -28,7 +31,9 @@ BarWidget {
     id: statusProc
     command: ["pgrep", "-f", "systemd-inhibit --what=handle-lid-switch"]
     onExited: function(exitCode) {
-      root.active = (exitCode === 0)
+      // If inhibitor is running (exit code 0), sleep is inactive (inhibited).
+      // Otherwise, sleep is active (normal).
+      root.sleepActive = (exitCode !== 0)
     }
   }
 
@@ -56,11 +61,11 @@ BarWidget {
     anchors.fill: parent
     bar: root.bar
     text: "󰌢"
-    active: root.active
-    dimmed: !root.active
+    active: root.sleepInhibited
+    dimmed: root.sleepActive
     slotSize: Style.bar.statusSlot
     fontSize: Style.font.caption
-    tooltipText: root.active ? "Lid Sleep: Active" : "Lid Sleep: Inactive"
+    tooltipText: root.sleepActive ? "Lid Sleep: Active" : "Lid Sleep: Inactive"
     onPressed: function(b) {
       root.toggle()
     }

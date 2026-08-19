@@ -2,15 +2,18 @@
 
 An [Omarchy](https://omarchy.org) bar widget plugin that toggles whether your laptop goes to sleep when the lid is closed.
 
-When enabled (Active), it takes a low-level `systemd-inhibit` lock on the lid switch so your system continues running while the screen locks normally.
+## States
+
+- **`Lid Sleep: Active` (Normal):** Lid sleep is active. Closing your laptop lid will put the machine to sleep normally. (Widget icon is quiet/dimmed).
+- **`Lid Sleep: Inactive` (Stay Awake):** Lid sleep is inactive. An inhibitor lock keeps the machine awake and running when the lid is closed while still locking the screen. (Widget icon is highlighted/active).
 
 ## Features
 
-- **One-Click Toggle:** Click the top bar icon (`󰌢`) to toggle lid sleep inhibition on or off.
-- **Visual Feedback:** Highlights when active and dims when inactive.
-- **Short Tooltips:** `"Lid Sleep: Active"` and `"Lid Sleep: Inactive"`.
+- **Action-Based Status:** Clear tooltips referencing the actual action: `"Lid Sleep: Active"` (normal) vs `"Lid Sleep: Inactive"` (stay awake).
+- **One-Click Toggle:** Click the top bar icon (`󰌢`) to toggle lid sleep on or off.
+- **Visual Feedback:** Highlights when lid sleep is inactive (stay-awake mode) to alert you that sleep is disabled.
 - **Desktop Notifications:** Displays quick on-screen alerts when toggling.
-- **Self-Contained:** Zero dependencies outside standard `systemd` and `bash`. No root or sudo required.
+- **Self-Contained:** Zero external configuration or root/sudo required.
 
 ## Installation
 
@@ -33,8 +36,8 @@ omarchy-shell shell enablePlugin lid-sleep '{}'
 
 ## How It Works
 
-- When activated, it spawns `systemd-inhibit --what=handle-lid-switch` in the background.
-- When deactivated, it terminates the inhibitor process, restoring standard lid suspend behavior.
+- When toggled to **Inactive**, it spawns `systemd-inhibit --what=handle-lid-switch` in the background.
+- When toggled back to **Active**, it terminates the inhibitor process, restoring standard suspend behavior.
 - Screen locking on lid close is preserved by Omarchy's window manager bindings.
 
 ## License
