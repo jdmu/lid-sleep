@@ -8,62 +8,66 @@ BarWidget {
   id: root
   moduleName: "lid-sleep"
 
-  // sleepActive is true when lid sleep is active (normal behavior).
-  // sleepActive is false when lid sleep is inactive (inhibitor running, stay awake).
-  property bool sleepActive: true
-  readonly property bool sleepInhibited: !sleepActive
-  readonly property string toggleScriptPath: Qt.resolvedUrl("toggle.sh").toString().replace(/^file:\/\//, "")
-
-  function refresh() {
-    if (!statusProc.running) statusProc.running = true
-  }
+  readonly property bool sleepInhibited: inhibitorProcess.running
+  readonly property bool sleepActive: !sleepInhibited
 
   function toggle() {
-    if (root.bar) {
-      root.bar.run(toggleScriptPath + " toggle")
+    if (inhibitorProcess.running) {
+      inhibitorProcess.running = false
+      sendNotification("Lid Sleep Enabled", "System will sleep when lid is closed")
+    } else {
+      inhibitorProcess.running = true
+      sendNotification("Lid Sleep Prevented", "System will stay awake when lid is closed")
     }
   }
 
-  function cleanup() {
-    if (root.sleepInhibited && root.bar) {
-      root.bar.run(toggleScriptPath + " stop false")
-    }
+  function sendNotification(title, message) {
+    Quickshell.execDetached([
+      "omarchy-notification-send",
+      "-g", "\udb80\udf22",
+      title,
+      message
+    ])
   }
-
-  Component.onDestruction: root.cleanup()
 
   implicitWidth: button.implicitWidth
   implicitHeight: button.implicitHeight
 
+  // Native Quickshell subprocess management.
+  // Quickshell's C++ process lifecycle manager directly owns the child PID
+  // and automatically terminates it when running = false or when the component unmounts.
   Process {
-    id: statusProc
-    command: [toggleScriptPath, "status"]
-    onExited: function(exitCode) {
-      // If inhibitor is running (exit code 0), sleep is inactive (inhibited).
-      // Otherwise, sleep is active (normal).
-      root.sleepActive = (exitCode !== 0)
-    }
-  }
-
-  Timer {
-    interval: 2000
-    running: true
-    repeat: true
-    triggeredOnStart: true
-    onTriggered: root.refresh()
+    id: inhibitorProcess
+    running: false
+    command: [
+      "systemd-inhibit",
+      "--what=handle-lid-switch",
+      "--who=org.omarchy.plugins.lid-sleep",
+      "--why=Prevent sleep on lid close",
+      "sleep", "infinity"
+    ]
   }
 
   IpcHandler {
     target: "lid-sleep"
 
-    function toggle(): void {
+    function toggle(): string {
       root.toggle()
+      return root.sleepInhibited ? "inhibited" : "active"
     }
-    function refresh(): void {
-      root.refresh()
+
+    function status(): string {
+      return root.sleepInhibited ? "inhibited" : "active"
     }
-    function stop(): void {
-      root.cleanup()
+
+    function enable(): string {
+      if (root.sleepInhibited) root.toggle()
+      return "active"
+    }
+
+    function disable(): string {
+      if (!root.sleepInhibited) root.toggle()
+      return "inhibited"
     }
   }
 

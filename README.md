@@ -35,9 +35,10 @@ omarchy restart shell
 
 ## How It Works
 
-- When toggled to **Inactive**, it spawns `systemd-inhibit --what=handle-lid-switch` and tracks its specific process PID under `~/.local/state/omarchy/plugins/lid-sleep/`.
-- When toggled back to **Active**, it terminates its tracked inhibitor process, restoring standard suspend behavior without affecting any other system inhibitors.
-- When the plugin is unloaded, disabled, or removed, active inhibition is cleanly released automatically.
+- **Native Subprocess Lifecycle:** Uses Quickshell's native `Process` engine to manage `systemd-inhibit` directly as a managed child process.
+- **Zero PID Files:** Operates completely in-memory with zero disk writes, state files, or `/proc` polling.
+- **Guaranteed Cleanup:** When the plugin is unloaded, disabled, or removed, Quickshell automatically terminates the child process.
+- **IPC Control:** Supports direct shell IPC via `omarchy-shell lid-sleep toggle`, `enable`, `disable`, and `status`.
 - Screen locking on lid close is preserved by Omarchy's window manager bindings.
 
 ## License
