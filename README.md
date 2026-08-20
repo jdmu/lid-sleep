@@ -33,13 +33,50 @@ cp -r lid-sleep ~/.config/omarchy/plugins/
 omarchy restart shell
 ```
 
+## Removal
+
+### Via Omarchy Plugin Manager
+
+```bash
+omarchy plugin remove lid-sleep
+```
+
+### Manual Removal
+
+```bash
+rm -rf ~/.config/omarchy/plugins/lid-sleep
+omarchy restart shell
+```
+
+## Usage & IPC
+
+- **Bar Interaction:** Left-click the bar icon to toggle lid sleep on or off.
+- **CLI / Keybinding:** Control the plugin via shell IPC:
+  ```bash
+  omarchy-shell lid-sleep toggle
+  omarchy-shell lid-sleep status
+  omarchy-shell lid-sleep enable
+  omarchy-shell lid-sleep disable
+  ```
+
+## Configuration
+
+Move the widget to a different bar section using the Omarchy CLI or by dragging the icon:
+
+```bash
+omarchy bar move lid-sleep --section center
+```
+
 ## How It Works
 
 - **Native Subprocess Lifecycle:** Uses Quickshell's native `Process` component to manage `systemd-inhibit` directly as a managed child process within the QML engine.
 - **In-Memory Operation:** Operates completely in-memory with zero disk writes or persistent state files.
 - **Guaranteed Cleanup:** When the plugin is unloaded, disabled, or removed, Quickshell's runtime process supervisor automatically terminates the child process.
-- **IPC Control:** Supports direct shell IPC via `omarchy-shell lid-sleep toggle`, `enable`, `disable`, and `status`.
-- Screen locking on lid close is preserved by Omarchy's window manager bindings.
+- **Screen Lock Preserved:** Screen locking on lid close is preserved by Omarchy's window manager bindings.
+
+## Dependencies
+
+- `systemd-inhibit` (standard component of `systemd`)
 
 ## License
 
