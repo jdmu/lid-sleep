@@ -92,10 +92,10 @@ hl.unbind("SUPER + SHIFT + Z")
 
 ## How It Works
 
-- **Native Subprocess Lifecycle:** Uses Quickshell's native `Process` component to manage `systemd-inhibit` directly as a managed child process within the QML engine.
-- **In-Memory Operation:** Operates completely in-memory with zero disk writes or persistent state files.
-- **Guaranteed Cleanup:** When the plugin is unloaded, disabled, or removed, Quickshell's runtime process supervisor automatically terminates the child process.
-- **Screen Lock Preserved:** Screen locking on lid close is preserved by Omarchy's window manager bindings.
+- **Toggle Sleep:** Uses standard `systemd-inhibit` to pause lid-close sleep when enabled, and releases the lock when disabled.
+- **Purely In-Memory:** Runs completely in memory without modifying any system settings or configuration files.
+- **Automatic Cleanup:** When the plugin is disabled or uninstalled, sleep inhibition is stopped automatically.
+- **Screen Lock Preserved:** Screen locking on lid close remains active for security.
 
 ## Dependencies
 
