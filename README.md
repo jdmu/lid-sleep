@@ -67,6 +67,29 @@ Move the widget to a different bar section using the Omarchy CLI or by dragging 
 omarchy bar move lid-sleep --section center
 ```
 
+## Optional Keybinding
+
+To toggle Lid Sleep with a global keyboard shortcut in Omarchy:
+
+### Adding a Keybinding
+
+Add the following line to `~/.config/hypr/bindings.lua` (for example, using `SUPER + SHIFT + Z`):
+
+```lua
+-- Toggle Lid Sleep
+o.bind("SUPER + SHIFT + Z", "Toggle Lid Sleep", "omarchy-shell lid-sleep toggle")
+```
+
+Changes apply immediately upon saving the file (or reload manually with `hyprctl reload`).
+
+### Removing the Keybinding
+
+To remove the shortcut, delete the line from `~/.config/hypr/bindings.lua`, or explicitly unbind it:
+
+```lua
+hl.unbind("SUPER + SHIFT + Z")
+```
+
 ## How It Works
 
 - **Native Subprocess Lifecycle:** Uses Quickshell's native `Process` component to manage `systemd-inhibit` directly as a managed child process within the QML engine.
